@@ -53,9 +53,7 @@ Además se escribió un programa en C basado en el programa en `amicable.S` y se
 
 ![Amicables en C](res/amicableInCdemo.png)
 
-Como se puede ver el programa funciona correctamente, encontrando los dos primeros números amigos
-
-Para compilar y correr el programa (se requiere de gcc `sudo apt install build-essential`):
+Como se puede ver el programa funciona correctamente encontrando los dos primeros números amigos. Para compilar y correr el programa (se requiere de gcc `sudo apt install build-essential`):
 
 ```bash
 gcc assembly/projects/amicableTestC/test.c -o assembly/projects/amicableTestC/test
@@ -66,6 +64,8 @@ Para demostrar el correcto funcionamiento del programa se simuló empezando la v
 
 ![Resultado completo](res/finalAmicable220.png)
 ![Resultado final](res/inicioAmicable220.png)
+
+Nota: En el programa se utiliza resta para encontrar si un número es divisible entre otro, no se utilizó la instrucción `rem` (remainder) ya que al probar no funcionaba, aunque no sabemos por que, ya que al revisar los comandos para compilar, en la opción `march` aparentemente se incluía la extensión RVM (`-march=rv32im`), pero al usar instrucciones de la extensión no se obtenían resultados
 
 ### Instrucciones utilizadas
 
