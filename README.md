@@ -39,6 +39,8 @@ cd ..
 
 ### Resultados de la simulación
 
+Nota: Se sugiere dar click en las imágenes de simulación para verlas mejor
+
 Antes de simular se aumentó el tiempo de simulación a `10000000ns` en `verilog/Ottochip_tb.v` 
 
 Durante la simulación del programa `amicable.S`, se llegó a un punto donde al parecer el procesador dejó de ejecutar instrucciones (por lo tanto no termina de ejecutarse)
