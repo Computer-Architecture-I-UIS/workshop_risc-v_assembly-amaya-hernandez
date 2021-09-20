@@ -70,16 +70,16 @@ Para demostrar el correcto funcionamiento del programa se simuló empezando la v
 ### Instrucciones utilizadas
 
 Lista de instrucciones diferentes:
-    - li
-    - add
-    - addi
-    - srli
-    - blt
-    - sub
-    - bnez
-    - beq
-    - bne
-    - j
+- li
+- add
+- addi
+- srli
+- blt
+- sub
+- bnez
+- beq
+- bne
+- j
 
 Cantidad (según el script): 70
 
@@ -120,22 +120,22 @@ Visualización de la lista antes y después de ordenarse (lista = [lista[0], lis
 ### Instrucciones utilizadas
 
 Lista de instrucciones diferentes (según el script):
-    - li    
-    - lui   
-    - mv    
-    - auipc 
-    - addi  
-    - sw    
-    - jal   
-    - j     
-    - sb    
-    - lw    
-    - lbu   
-    - add   
-    - bgeu  
-    - bltu  
-    - beqz  
-    - nop
-    - ret
+- li    
+- lui   
+- mv    
+- auipc 
+- addi  
+- sw    
+- jal   
+- j     
+- sb    
+- lw    
+- lbu   
+- add   
+- bgeu  
+- bltu  
+- beqz  
+- nop
+- ret
 
 Cantidad (según el script): 129
