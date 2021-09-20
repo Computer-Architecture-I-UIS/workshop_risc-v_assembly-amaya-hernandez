@@ -39,7 +39,7 @@ cd ..
 
 ### Resultados de la simulación
 
-Antes de simular se aumentó el tiempo de simulación a `10000000ns`. 
+Antes de simular se aumentó el tiempo de simulación a `10000000ns` en `verilog/Ottochip_tb.v` 
 
 Durante la simulación del programa `amicable.S`, se llegó a un punto donde al parecer el procesador dejó de ejecutar instrucciones (por lo tanto no termina de ejecutarse)
 
@@ -62,7 +62,7 @@ gcc assembly/projects/amicableTestC/test.c -o assembly/projects/amicableTestC/te
 ./assembly/projects/amicableTestC/test
 ```
 
-Para demostrar el correcto funcionamiento del programa se simuló empezando la variable A en 219 (Sabiendo que el primer número amigo que se encuentra es 220)
+Para demostrar el correcto funcionamiento del programa se simuló empezando la variable A en 219 (Sabiendo que el primer número amigo que se encuentra es 220), el tiempo de simulación que se utilizó para este fue de `160000ns` 
 
 ![Resultado completo](res/finalAmicable220.png)
 ![Resultado final](res/inicioAmicable220.png)
@@ -92,6 +92,8 @@ Para eso se utilizan los registros de regtest1 (reg0, reg1, reg2, reg3) como una
 ### [Diagrama de flujo](res/orderFlowchart.pdf) 
 
 ### Pasos para ser ejecutado
+
+Se utilizó un tiempo de simulación de `160000ns`
 
 Ejecutar los siguientes comandos en la carpeta raíz del repositorio
 
