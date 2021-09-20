@@ -3,8 +3,8 @@
 En el workshop se desarrollan 2 ejercicios, uno en assembly y otro en C con la ISA RISC-V, y se simulan, a continuación se presentan los resultados y como obtenerlos
 
 Requisitos:
-    - [RISC-V GNU Compiler Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
-    - [Iverilog](https://iverilog.fandom.com/wiki/Installation_Guide)
+- [RISC-V GNU Compiler Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
+- [Iverilog](https://iverilog.fandom.com/wiki/Installation_Guide)
 
 ## Números Amigos (Assembly)
 
