@@ -1,4 +1,7 @@
-//
+// Busca el primer par de 'amicable numbers'
+// https://en.wikipedia.org/wiki/Amicable_numbers
+// 		"Amicable numbers are two different numbers related in such a way that the sum of the proper divisors of each is equal to the other number" 
+
 	addi x1, zero, 0
 	addi x2, zero, 0
 	addi x3, zero, 0
