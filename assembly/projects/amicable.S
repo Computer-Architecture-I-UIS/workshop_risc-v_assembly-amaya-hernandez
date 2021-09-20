@@ -41,17 +41,10 @@
 
 
 _start:
-	li t0, 0; // A
+	li t0, 219; // A
 	li t4, 0; // Residuo
 	li t5, 0; // A/2
 	li t6, 0; // finished = 0
-
-	//B divisors test
-	//li t0, 220; 
-	//li t1, 284; 
-	//li t2, 1; 
-	//j .equality
-	//end B divisors test
 
 	.counter:
 	li t6, 1;
