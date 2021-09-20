@@ -8,11 +8,11 @@ void main()
 
     // Random numbers generated using https://www.browserling.com/tools/random-hex
     (*((int *) 0x20000060)) = 0x6cff6afe; // regtest1 reg0
-    (*((int *) 0x20000064)) = 0xd4bba61f;
-    (*((int *) 0x20000068)) = 0x552a1d58;
-    (*((int *) 0x2000006C)) = 0xfcfae142;
+    (*((int *) 0x20000064)) = 0xd4bba61f; // regtest1 reg1
+    (*((int *) 0x20000068)) = 0x552a1d58; // regtest1 reg2
+    (*((int *) 0x2000006C)) = 0xfcfae142; // regtest1 reg3
 
-    int * isOrdered = (int *) 0x20002080;
+    int * isOrdered = (int *) 0x20002080; // regtest2 reg0
     (*isOrdered) = 0;
     char tempIsOrdered = 0;
 

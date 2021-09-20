@@ -1,6 +1,6 @@
 // Amicable numbers program written in c as closely as possible to the assembly source to demonstrate that it works
 
-// compile with either gcc or cl (visual studio):
+// compile with either gcc or cl (visual studio dev tools):
 // gcc test.c
 // cl /EHsc .\test.c
 
