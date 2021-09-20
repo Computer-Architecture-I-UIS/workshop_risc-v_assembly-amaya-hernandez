@@ -1,4 +1,5 @@
 // Organize array of unsigned 8-bit integers in decreasing order (in place)
+//      meaning list[0] will have the highest number, and list[15] the lowest
 
 void main()
 {
