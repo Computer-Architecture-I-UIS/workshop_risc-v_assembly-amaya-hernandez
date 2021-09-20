@@ -1,132 +1,139 @@
-# RISC-V Assembly First Steps
+# Workshop RISC-V
 
-The following procedure should get you started with a clean running RISC-V Assembly project.
+En el workshop se desarrollan 2 ejercicios, uno en assembly y otro en C con la ISA RISC-V, y se simulan, a continuación se presentan los resultados y como obtenerlos
 
-### Prerequisites
+Requisitos:
+    - [RISC-V GNU Compiler Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
+    - [Iverilog](https://iverilog.fandom.com/wiki/Installation_Guide)
 
-#### Please Download & Read:
+## Números Amigos (Assembly)
 
-- [RISC-V Book](http://riscvbook.com/spanish/) cap 1 to 3.
-- [RISC-V Green Card](http://riscvbook.com/greencard-20181213.pdf)
+Denifiendo d(n) como la suma de los divisores propios de n, si d(a) = b y d(b) = a, donde a es diferente de b, entonces a y b son un par de números amigos. El programa encuentra el par de números amigos más pequeños.
 
-#### Please Install:
+### [Diagrama de flujo](res/amicableFlowchart.pdf) 
 
-- RISC-V GNU Compiler Toolchain from [here](https://github.com/riscv/riscv-gnu-toolchain), with **--enable-multilib** option
-  - Add to your ~/.bashrc file:
+### Pasos para ser ejecutado
 
-  ```sh
-  # assume RISC-V is installed to /opt/riscv/
-  export RISCV_PATH=/opt/riscv
-  export PATH=$PATH:$RISCV_PATH/bin
-  ```
-- Icarus Verilog from [here](https://iverilog.fandom.com/wiki/Installation_Guide), **compile from source**
-- Download this repository and execeute the following commands to add execution permissions:
-  ```sh
-  chmod +x doasm.sh
-  ```
-  ```sh
-  chmod +x compile.sh
-  ```
-  ```sh
-  chmod +x reset.sh
-  ```
+Ejecutar los siguientes comandos en la carpeta raíz del repositorio:
 
+#### Programa de números amigos
 
-### Test Tools Before Proceeding 
-
-- RISC-V GNU Compiler Toolchain
-  ```sh
-  riscv64-unknown-elf-gcc --version
-  ```
-  ```sh
-  riscv64-unknown-elf-objcopy --version
-  ```
-- Iverilog
-  - Follow the [guide](https://iverilog.fandom.com/wiki/Getting_Started)
-
-## Fibonacci Sequence in RISC-V Assembly by Cristian Miranda 
-
-Such that each number is the sum of the two preceding ones, starting from 0 and 1. [Ref](https://en.wikipedia.org/wiki/Fibonacci_number)
-
-- 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-
-```
-_start:
- li t0, 255; //Final
- li t1, 1;   //ultimo
- li t2, 0;   //penultimo
- li t3, 0;   //suma
- .inicio:
-		
-  add t1, zero, 1;  //Inicializamos el ultimo en uno
-		
-  add t2, zero ,0;  //Limpiamos el penultimo en cero para comenzar nuevamente la serie
-		
-   .sigueSumando:  //Bucle para calcular la serie
-		
-    add t3, t2, t1; //sumamos ultimo y penultimo
-
-    bge t3, t0, .inicio;  //Verificamos que la suma no se pase de la variable final=255.
-                          //Salto a .inicio si suma >= final
-
-    add t2, t1, 0;  //penultimo = ultimo
-    add t1, t3, 0;  //ultimo = suma
-
-    jal x1, .sigueSumando //Saltamos a .sigueSumando
-			
-j _start
-```
-
-
-### Run The Compiler
-
-**doasm.sh** script will:
-
-- Compile the asm program
-- Assemble your program
-- Get the binary mahine code 
-- Get the HEX file for Verilog techbench
-- Print the dumped file
-- Print the number of instructions
-
-```sh
-./doasm.sh assembly/projects/fibonacci.S
-```
-
-### Run the Simulator
-
-```sh
+```bash
+./doasm.sh assembly/projects/amicable.S
 cd verilog
-```
-```sh
 iverilog -o test *.v
-```
-```sh
 vvp test
+gtkwave -o test.vcd
+cd ..
+```
+#### Programa test
+
+```bash
+./doasm.sh assembly/projects/test.S
+cd verilog
+iverilog -o test *.v
+vvp test
+gtkwave -o test.vcd
+cd ..
 ```
 
-### Check the Waveform
+### Resultados de la simulación
 
-```sh
+Antes de simular se aumentó el tiempo de simulación a `10000000ns`. 
+
+Durante la simulación del programa `amicable.S`, se llegó a un punto donde al parecer el procesador dejó de ejecutar instrucciones (por lo tanto no termina de ejecutarse)
+
+![Amicables empezando en 0](res/amicables0.png)
+
+Para asegurarse de que no era un problema del programa `amicable.S`, se simuló un programa (`test.S`) donde se le suma 1 a una variable temporal con el mismo tiempo de simulación
+
+![Demo](res/demoProcessorStop.png)
+
+Además se escribió un programa en C basado en el programa en `amicable.S` y se ejecutó en windows
+
+![Amicables en C](res/amicableInCdemo.png)
+
+Como se puede ver el programa funciona correctamente, encontrando los dos primeros números amigos
+
+Para compilar y correr el programa (se requiere de gcc `sudo apt install build-essential`):
+
+```bash
+gcc assembly/projects/amicableTestC/test.c -o assembly/projects/amicableTestC/test
+./assembly/projects/amicableTestC/test
+```
+
+Para demostrar el correcto funcionamiento del programa se simuló empezando la variable A en 219 (Sabiendo que el primer número amigo que se encuentra es 220)
+
+![Resultado completo](res/finalAmicable220.png)
+![Resultado final](res/inicioAmicable220.png)
+
+### Instrucciones utilizadas
+
+Lista de instrucciones diferentes:
+    - li
+    - add
+    - addi
+    - srli
+    - blt
+    - sub
+    - bnez
+    - beq
+    - bne
+    - j
+
+Cantidad (según el script): 70
+
+## Ordenar Array (C program)
+
+El programa ordena una lista de 16 enteros de 8 bits sin signo de mayor a menor (list[0] contiene el mayor, list[15] contiene el menor), la lista contiene valores predefinidos al azar
+
+Para eso se utilizan los registros de regtest1 (reg0, reg1, reg2, reg3) como una lista de 16 valores enteros sin signo de 8 bits, y se cargan valores al azar, y el reg0 de regtest2 se utiliza para indicar cuando la lista esté ordenada
+
+### [Diagrama de flujo](res/orderFlowchart.pdf) 
+
+### Pasos para ser ejecutado
+
+Ejecutar los siguientes comandos en la carpeta raíz del repositorio
+
+```bash
+./compile.sh c_program/order.c
+cd verilog
+iverilog -o test *.v
+vvp test
 gtkwave test.vcd
+cd ..
 ```
 
-## PWM C program to RISC-V Assembly by Cristian Miranda 
+### Resultados de la simulación
 
-### Run The Compiler
+Inicio de la simulación, se muestra cuando se cargan los valores aleatorios a la lista
+![Inicio Simulación](res/inicioOrder.png)
 
-**compile.sh** script will:
+Punto de la simulación donde se indica que la lista está ordenada
+![Final Simulación](res/finalOrder.png)
 
-- Compile the Start.S program
-- Compile the C program
-- Assemble your program with the Start.S
-- Get the binary mahine code 
-- Get the HEX file for Verilog techbench
-- Print the dumped file
-- Print the number of instructions
+Visualización de la lista antes y después de ordenarse (lista = [lista[0], lista[1] ... lista[15]])
+![Lista Antes y Después](res/orderResults.svg)
 
-```sh
-./compile.sh c_program/PWM.c
-```
+### Instrucciones utilizadas
 
-### Then Repet Run the Simulator & Check the Waveform
+Lista de instrucciones diferentes (según el script):
+    - li    
+    - lui   
+    - mv    
+    - auipc 
+    - addi  
+    - sw    
+    - jal   
+    - j     
+    - sb    
+    - lw    
+    - lbu   
+    - add   
+    - bgeu  
+    - bltu  
+    - beqz  
+    - nop
+    - ret
+
+Cantidad (según el script): 129
