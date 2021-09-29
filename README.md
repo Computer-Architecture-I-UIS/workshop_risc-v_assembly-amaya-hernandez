@@ -41,7 +41,7 @@ cd ..
 
 Nota: Se sugiere dar click en las imágenes de simulación para verlas mejor
 
-Antes de simular se aumentó el tiempo de simulación a `10000000ns` en `verilog/Ottochip_tb.v` 
+Antes de simular se aumentó el tiempo de simulación a `10000000 ns` en `verilog/Ottochip_tb.v` 
 
 Durante la simulación del programa `amicable.S`, se llegó a un punto donde al parecer el procesador dejó de ejecutar instrucciones (por lo tanto no termina de ejecutarse)
 
@@ -51,7 +51,9 @@ Para asegurarse de que no era un problema del programa `amicable.S`, se simuló 
 
 ![Demo](res/demoProcessorStop.png)
 
-Además se escribió un programa en C basado en el programa en `amicable.S` y se ejecutó en windows
+para el programa `test.S`, la variable temporal cambia por última vez en `5885795 ns`, que es también el tiempo donde el procesador deja de funcionar para la simulación del programa `amicable.S`
+
+Además se escribió un programa en C basado en el programa `amicable.S` y se ejecutó en windows
 
 ![Amicables en C](res/amicableInCdemo.png)
 
@@ -62,7 +64,7 @@ gcc assembly/projects/amicableTestC/test.c -o assembly/projects/amicableTestC/te
 ./assembly/projects/amicableTestC/test
 ```
 
-Para demostrar el correcto funcionamiento del programa se simuló empezando la variable A en 219 (Sabiendo que el primer número amigo que se encuentra es 220), el tiempo de simulación que se utilizó para este fue de `160000ns` 
+Para demostrar el correcto funcionamiento del programa se simuló empezando la variable A en 219 (Sabiendo que el primer número amigo que se encuentra es 220), el tiempo de simulación que se utilizó para este fue de `160000 ns` 
 
 ![Resultado completo](res/finalAmicable220.png)
 ![Resultado final](res/inicioAmicable220.png)
@@ -95,7 +97,7 @@ Para eso se utilizan los registros de regtest1 (reg0, reg1, reg2, reg3) como una
 
 ### Pasos para ser ejecutado
 
-Se utilizó un tiempo de simulación de `160000ns`
+Se utilizó un tiempo de simulación de `160000 ns`
 
 Ejecutar los siguientes comandos en la carpeta raíz del repositorio
 
@@ -122,10 +124,10 @@ Visualización de la lista antes y después de ordenarse (lista = [lista[0], lis
 ### Instrucciones utilizadas
 
 Lista de instrucciones diferentes (según el script):
-- li    
-- lui   
-- mv    
-- auipc 
+- li
+- lui
+- mv
+- auipc
 - addi  
 - sw    
 - jal   
@@ -145,7 +147,6 @@ Cantidad (según el script): 129
 ## Conclusiones
 
 - Es preferible simular una pequeña cantidad de tiempo, ya que para tiempos de simulación grandes (aproximadamente > 1000000 ns) el simulador puede durar varios minutos en terminar, y el tamaño del archivo de traces (.vcd) puede llegar al orden de los GiB (para 10000000 ns se obtiene un archivo de aproximadamente 3 GiB)
-
 
 ## Referencias
 
