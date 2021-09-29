@@ -47,7 +47,7 @@
 
 
 _start:
-	li t0, 219; //1; // A
+	li t0, 1; // A
 	li t4, 0; // Residuo
 	li t5, 0; // A/2
 	li t6, 0; // finished = 0
