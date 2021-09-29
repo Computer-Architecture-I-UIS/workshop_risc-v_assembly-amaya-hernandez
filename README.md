@@ -71,13 +71,13 @@ Para demostrar el correcto funcionamiento del programa se simuló empezando la v
 
 Nota: En el programa se utiliza resta para encontrar si un número es divisible entre otro, no se utilizó la instrucción `rem` (remainder) ya que al probar no funcionaba, aunque no sabemos por que, ya que al revisar los comandos para compilar, en la opción `march` aparentemente se incluía la extensión RVM (`-march=rv32im`), pero al usar instrucciones de la extensión no se obtenían resultados
 
-#### Como arreglar este problema?
+#### ¿Cómo arreglar este problema?
 
 Se trató de solucionar el hecho de que el programa tomara muchas iteraciones, para eso se escribio una versión optimizada del programa, que se llama `amicableFast.S`, los cambios que se hicieron están relacionados con la manera en que se encuentran divisores.
 
 Se volvio a correr la simulación, pero, aunque llegó a un número mas alto, no terminó de ejecutarse ya que el procesador dejo de funcionar en los mismos `5885795 ns`.
 
-##### Por que no termina la simulación?
+##### ¿Por que no termina la simulación?
 
 Para revisar por qué no terminaba la simulación (es decir, por qué el procesador no seguía ejecutando instrucciones), se empezaron a revisar todas las señales para cada módulo, empezando desde el módulo superior, y se miró que señales cambiaban para un tiempo cercano al de `5885795 ns` (tiempo donde el procesador dejaba de funcionar), se encontraron ciertas señales que cerca a ese tiempo, cambiaban de 0 a 1, y se iba revisando en `Ottochip.v` que hacía que esas señales cambiaran. Después de buscar en varios módulos, se llegó a unas señales que dependían de señales generadas (tipo _T_4, etc) por lo que no se siguió investigando por ese lado, a lo que si se llegó, es que estaba relacionado con el UART.
 
