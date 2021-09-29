@@ -146,7 +146,9 @@ Cantidad (según el script): 129
 
 ## Conclusiones
 
-- Es preferible simular una pequeña cantidad de tiempo, ya que para tiempos de simulación grandes (aproximadamente > 1000000 ns) el simulador puede durar varios minutos en terminar, y el tamaño del archivo de traces (.vcd) puede llegar al orden de los GiB (para 10000000 ns se obtiene un archivo de aproximadamente 3 GiB)
+- Es preferible simular una pequeña cantidad de tiempo, ya que para tiempos de simulación grandes (aproximadamente > 1000000 ns) el simulador puede durar varios minutos en terminar, y el tamaño del archivo de traces (.vcd) puede llegar al orden de los GiB (para 10000000 ns se obtiene un archivo de aproximadamente 3 GiB).
+- En la simulación procesador deja de ejecutar instrucciones aparentemente en `5885795 ns`, por lo tanto para programas complejos que duran mucho tiempo no se puede obtener el resultado final.
+- El algoritmo utilizado para el programa de números amigos dura muchas iteraciones, por lo que demora mucho tiempo en llegar al resultado y no fue posible simularlo completamente empezando a buscar números amigos desde 1 (para llegar al resultado se empezó a buscar desde un número cercano al que se quería hallar), parte del problema es que se requieren hallar los divisores de varios números y la instrucción `rem` (operación módulo) no esta disponible, por lo que para determinar si un número era divisor de otro se realizaron restas sucesivas, y esto toma muchas iteraciones.
 
 ## Referencias
 
