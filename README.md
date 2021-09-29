@@ -94,7 +94,8 @@ Lo que hicimos entonces fue comentar todas las llamadas a `send_word()` porque a
 Se muestran los resultados con el testbech arreglado y utilizando el programa `amicableFast.S` para obtener el resultado en menos tiempo
 
 El tiempo de simulación es de `10000000 ns`
-<span style="color:red">**WARNING:**</span> Para este tiempo de simulación se obtiene un `.vcd` de **5.5 GiB**
+
+<span style="color:red">WARNING:</span> Para este tiempo de simulación se obtiene un `.vcd` de **5.5 GiB**
 
 Para simular: ejecutar los siguientes comandos en la carpeta raíz del repositorio
 
