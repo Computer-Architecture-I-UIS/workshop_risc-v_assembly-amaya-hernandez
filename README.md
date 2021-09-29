@@ -144,6 +144,6 @@ Cantidad (según el script): 129
 
 ### Referencias
 
--[Amicable Numbers](https://projecteuler.net/archives)  
--[RISC-V ISA Specifications](https://riscv.org/technical/specifications/)
--[Guía Práctica de RISC-V: El Atlas de una Arquitectura Abierta](http://riscvbook.com/spanish/)
+- [Amicable Numbers](https://projecteuler.net/archives)  
+- [RISC-V ISA Specifications](https://riscv.org/technical/specifications/)
+- [Guía Práctica de RISC-V: El Atlas de una Arquitectura Abierta](http://riscvbook.com/spanish/)
