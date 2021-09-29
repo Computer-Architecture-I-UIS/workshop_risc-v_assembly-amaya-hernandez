@@ -46,19 +46,19 @@ Ottochip myCHIP (
     #(TB_ns*3);
 	uart_send(8'hFF);//AUTO BAUD
         
-	send_word("CAFE");
+	// send_word("CAFE");
 
 	
-	send_word(32'h8);
+	// send_word(32'h8);
 
-	send_word(32'h00000013);
-	send_word(32'h20000137);
-	send_word(32'h02010113);
-	send_word(32'h00800193);
-	send_word(32'h00012223);
-	send_word(32'h00012023);
-	send_word(32'h00312023);
-	send_word(32'hff9ff06f);
+	// send_word(32'h00000013);
+	// send_word(32'h20000137);
+	// send_word(32'h02010113);
+	// send_word(32'h00800193);
+	// send_word(32'h00012223);
+	// send_word(32'h00012023);
+	// send_word(32'h00312023);
+	// send_word(32'hff9ff06f);
 	
 
     end

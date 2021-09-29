@@ -71,6 +71,47 @@ Para demostrar el correcto funcionamiento del programa se simuló empezando la v
 
 Nota: En el programa se utiliza resta para encontrar si un número es divisible entre otro, no se utilizó la instrucción `rem` (remainder) ya que al probar no funcionaba, aunque no sabemos por que, ya que al revisar los comandos para compilar, en la opción `march` aparentemente se incluía la extensión RVM (`-march=rv32im`), pero al usar instrucciones de la extensión no se obtenían resultados
 
+#### Como arreglar este problema?
+
+Se trató de solucionar el hecho de que el programa tomara muchas iteraciones, para eso se escribio una versión optimizada del programa, que se llama `amicableFast.S`, los cambios que se hicieron están relacionados con la manera en que se encuentran divisores.
+
+Se volvio a correr la simulación, pero, aunque llegó a un número mas alto, no terminó de ejecutarse ya que el procesador dejo de funcionar en los mismos `5885795 ns`.
+
+##### Por que no termina la simulación?
+
+Para revisar por qué no terminaba la simulación (es decir, por qué el procesador no seguía ejecutando instrucciones), se empezaron a revisar todas las señales para cada módulo, empezando desde el módulo superior, y se miró que señales cambiaban para un tiempo cercano al de `5885795 ns` (tiempo donde el procesador dejaba de funcionar), se encontraron ciertas señales que cerca a ese tiempo, cambiaban de 0 a 1, y se iba revisando en `Ottochip.v` que hacía que esas señales cambiaran. Después de buscar en varios módulos, se llegó a unas señales que dependían de señales generadas (tipo _T_4, etc) por lo que no se siguió investigando por ese lado, a lo que si se llegó, es que estaba relacionado con el UART.
+
+Entonces se revisó el testbench `Ottochip_tb.v`, y se vio que se enviaban ciertos datos al UART en un bloque `initial begin` que se ejecutaba en paralelo con otro bloque `initial begin` que era el que guardaba los datos de la simulación.
+
+En la parte donde se enviaban datos al UART, se ejecutaban funciones, que duraban un múltiplo de `TB_ns = 1000000000/BAUD_RATE` donde `BAUD_RATE = 9600`, entonces para saber en que función se encontraba el fallo, se tomó el tiempo en donde dejaba de funcionar el simulador, y se dividió en `TB_ns`, dando `N_TB_ns = 5885795/TB_ns`, esto dio `56.503632` es decir, después de `56` delays de `TB_ns` es que se encontraba el fallo.
+
+Ahora, al principio del primer `initial begin` se encuentra un delay de `CLOCK_PERIOD*20`, este no lo tuvimos en cuenta porque no era muy grande el valor, después hay un delay de `TB_ns*3`, [van `3` delays], después se ejecuta la función `uart_send()` la cuál tiene `9` delays de `TB_ns` [van `12` delays] (1 delay solo, un for de 0 a 7, con un delay en cada ciclo, y después al final otro delay solo), y después se ejecuta la función `send_word()` la cual tiene `41` delays [van `53` delays] (tiene 5 delays, y llama 4 veces a `uart_send()`), y después se ejecuta la función `send_word()` denuevo, ya pasandose de los `56` delays donde se supone que sucede el error, es decir, el error se debe presentar en `send_word(32'h8);`.
+
+Lo que hicimos entonces fue comentar todas las llamadas a `send_word()` porque asumimos que no eran importantes, después de eso volvimos a simular y el procesador funcionó correctamente.
+
+###### Simulación arreglada
+
+Se muestran los resultados con el testbech arreglado y utilizando el programa `amicableFast.S` para obtener el resultado en menos tiempo
+
+El tiempo de simulación es de `10000000 ns`
+<span style="color:red">**WARNING:**</span> Para este tiempo de simulación se obtiene un `.vcd` de **5.5 GiB**
+
+Para simular: ejecutar los siguientes comandos en la carpeta raíz del repositorio
+
+```bash
+./doasm.sh assembly/projects/amicableFast.S
+cd verilog
+iverilog -o test *.v
+vvp test
+gtkwave -o test.vcd
+cd ..
+```
+
+![Resultado completo](res/inicioAmicableFix.png)
+![Resultado final](res/finalAmicableFix.png)
+
+Como se puede ver se llega al resultado esperado (A = 220, B = 284), y además el procesador sigue funcionando después de `5885795 ns`
+
 ### Instrucciones utilizadas
 
 Lista de instrucciones diferentes:
@@ -149,6 +190,7 @@ Cantidad (según el script): 129
 - Es preferible simular una pequeña cantidad de tiempo, ya que para tiempos de simulación grandes (aproximadamente > 1000000 ns) el simulador puede durar varios minutos en terminar, y el tamaño del archivo de traces (.vcd) puede llegar al orden de los GiB (para 10000000 ns se obtiene un archivo de aproximadamente 3 GiB).
 - En la simulación procesador deja de ejecutar instrucciones aparentemente en `5885795 ns`, por lo tanto para programas complejos que duran mucho tiempo no se puede obtener el resultado final.
 - El algoritmo utilizado para el programa de números amigos dura muchas iteraciones, por lo que demora mucho tiempo en llegar al resultado y no fue posible simularlo completamente empezando a buscar números amigos desde 1 (para llegar al resultado se empezó a buscar desde un número cercano al que se quería hallar), parte del problema es que se requieren hallar los divisores de varios números y la instrucción `rem` (operación módulo) no esta disponible, por lo que para determinar si un número era divisor de otro se realizaron restas sucesivas, y esto toma muchas iteraciones.
+- 
 
 ## Referencias
 

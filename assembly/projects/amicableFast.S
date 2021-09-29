@@ -141,7 +141,4 @@ _start:
 		li t6, 8;	// finished = 1
 
 
-
-
-
 j _start
