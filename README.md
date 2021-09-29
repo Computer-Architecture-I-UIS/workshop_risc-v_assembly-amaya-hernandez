@@ -142,7 +142,12 @@ Lista de instrucciones diferentes (según el script):
 
 Cantidad (según el script): 129
 
-### Referencias
+## Conclusiones
+
+- Es preferible simular una pequeña cantidad de tiempo, ya que para tiempos de simulación grandes (aproximadamente > 1000000 ns) el simulador puede durar varios minutos en terminar, y el tamaño del archivo de traces (.vcd) puede llegar al orden de los GiB (para 10000000 ns se obtiene un archivo de aproximadamente 3 GiB)
+
+
+## Referencias
 
 - [Amicable Numbers](https://projecteuler.net/archives)  
 - [RISC-V ISA Specifications](https://riscv.org/technical/specifications/)
